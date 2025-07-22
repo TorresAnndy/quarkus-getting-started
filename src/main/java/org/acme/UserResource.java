@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.acme.micro.User;
 
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -17,6 +18,7 @@ import jakarta.ws.rs.Produces;
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
     @GET
+    @Path("/hola")
     @Produces(MediaType.TEXT_PLAIN)
     public String hello(){
         return "Hola desde quarkus get rest";
@@ -28,8 +30,8 @@ public class UserResource {
     }
 
     @POST
-    @
-    public List<User> postAllUsers(){
-        return User.listAll();
+    @Transactional
+    public void addUser(User user){
+        user.persist();
     }
 }
