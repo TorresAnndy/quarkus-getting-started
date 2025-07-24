@@ -1,15 +1,15 @@
-package org.acme;
+package org.acme.controller;
 
 import java.util.List;
 
-import org.acme.micro.User;
+import org.acme.model.User;
 
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/api")
+@Path("/api/users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
@@ -22,13 +22,11 @@ public class UserResource {
     }
 
     @GET
-    @Path("/users")
     public List<User> getAllUsers() {
         return User.listAll();
     }
 
     @POST
-    @Path("/users")
     @Transactional
     public Response addUser(User user) {
         user.persist();
@@ -36,7 +34,7 @@ public class UserResource {
     }
 
     @PUT
-    @Path("/users/{id}")
+    @Path("/{id}")
     @Transactional
     public Response editUser(@PathParam("id") Long id, User updatedUser) {
         User user = User.findById(id);
@@ -50,7 +48,7 @@ public class UserResource {
     }
 
     @DELETE
-    @Path("/users/{id}")
+    @Path("/{id}")
     @Transactional
     public Response deleteUser(@PathParam("id") Long id) {
         boolean deleted = User.deleteById(id);
